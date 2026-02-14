@@ -73,6 +73,17 @@ def analyze_menu(menu_df, window="week"):
         how="left"
     ).dropna()
 
+    if merged_df.empty:
+        return {
+            "risk_score": 0,
+            "risk_level": "Unknown",
+            "flags": ["No matched dishes"],
+            "macro_pct": {},
+            "deviation_score": 0,
+            "explanation": "No dishes could be matched with nutrition reference data."
+        }
+
+
     # ---- Scale nutrition by quantity ----
     for col in ["calories_kcal", "carbs_g", "protein_g", "fat_g"]:
         merged_df[col] = (merged_df[col] * merged_df["quantity_g"]) / 100
@@ -96,7 +107,7 @@ def analyze_menu(menu_df, window="week"):
     daily_summary["fat_pct"] = daily_summary["fat_g"] / macro_total * 100
 
     # ---- Rolling window ----
-    window_size = WINDOW_OPTIONS[window]
+    window_size = WINDOW_OPTIONS.get(window, 7)
 
     daily_summary["carbs_roll"] = daily_summary["carbs_pct"].rolling(window_size, 1).mean()
     daily_summary["protein_roll"] = daily_summary["protein_pct"].rolling(window_size, 1).mean()
@@ -124,7 +135,7 @@ def analyze_menu(menu_df, window="week"):
 
     daily_summary["range_pressure"] = daily_summary.apply(range_pressure, axis=1)
 
-    avg_dev = daily_summary["deviation_score"].mean()
+    avg_dev = daily_summary["deviation_score"].mean() + 1e-6
     avg_pressure = daily_summary["range_pressure"].mean() + 1e-6
 
     daily_summary["raw_risk"] = (
@@ -147,6 +158,7 @@ def analyze_menu(menu_df, window="week"):
 
     daily_summary["flags"] = daily_summary.apply(tag_day, axis=1)
 
+
     latest = daily_summary.iloc[-1]
     # ---- Risk Level Interpretation ----
     risk_score = int(latest["risk_score"])
@@ -159,28 +171,27 @@ def analyze_menu(menu_df, window="week"):
         risk_level = "High"
 
     # ---- Explanation Builder ----
-    explanation_text = ""
     explanations = []
-
 
     if latest["range_pressure"] == 0:
         explanations.append("All macro-nutrient shares remain within reference ranges.")
-    else:
-        if latest["carbs_roll"] > REFERENCE_RANGES["carbs"][1]:
-            explanations.append("Carbohydrate share exceeds recommended upper limit.")
-        if latest["protein_roll"] < REFERENCE_RANGES["protein"][0]:
-            explanations.append("Protein share is below recommended minimum.")
-        if latest["fat_roll"] > REFERENCE_RANGES["fat"][1]:
-            explanations.append("Fat share exceeds recommended upper limit.")
 
-        if latest["deviation_score"] > daily_summary["deviation_score"].mean():
-            explanations.append("Menu composition deviates significantly from historical baseline.")
+    if latest["carbs_roll"] > REFERENCE_RANGES["carbs"][1]:
+        explanations.append("Carbohydrate share exceeds recommended upper limit.")
 
-        if not explanations:
-            explanations.append("No abnormal patterns detected in macro distribution.")
+    if latest["protein_roll"] < REFERENCE_RANGES["protein"][0]:
+        explanations.append("Protein share is below recommended minimum.")
 
-        explanation_text = " ".join(explanations)
+    if latest["fat_roll"] > REFERENCE_RANGES["fat"][1]:
+        explanations.append("Fat share exceeds recommended upper limit.")
 
+    if latest["deviation_score"] > daily_summary["deviation_score"].mean():
+        explanations.append("Menu composition deviates significantly from historical baseline.")
+
+    if not explanations:
+        explanations.append("No abnormal patterns detected in macro distribution.")
+
+    explanation_text = " ".join(explanations)
 
     return {
     "risk_score": risk_score,

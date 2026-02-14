@@ -177,5 +177,7 @@ pyrightconfig.json
 requirement.txt
 requirements.txt
 
+Data/mess_menu.csv
+Data/Indian_Food_Nutrition_Processed.csv
 
 # End of https://www.toptal.com/developers/gitignore/api/python
