@@ -192,14 +192,14 @@ def analyze_menu(menu_df, window="week"):
     "risk_level": risk_level,
     "flags": latest["flags"],
 
-    # Daily distribution (raw current day)
+    # Daily macro %
     "macro_pct": {
         "carbs": round(latest["carbs_pct"], 1),
         "protein": round(latest["protein_pct"], 1),
         "fat": round(latest["fat_pct"], 1)
     },
 
-    # Rolling distribution (used in risk calculation)
+    # Rolling macro %
     "macro_roll": {
         "carbs": round(latest["carbs_roll"], 1),
         "protein": round(latest["protein_roll"], 1),
