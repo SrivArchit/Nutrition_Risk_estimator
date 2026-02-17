@@ -73,15 +73,28 @@ if uploaded_file:
         # Always show explanation
         st.write(result["explanation"])
 
-        # Macro Distribution
-        st.subheader("Macro Distribution (%)")
+        # -------------------------------
+        # Daily Macro Distribution
+        # -------------------------------
+        st.subheader("Daily Macro Distribution (%)")
 
-        macro_df = pd.DataFrame(
+        macro_daily_df = pd.DataFrame(
             result["macro_pct"].items(),
             columns=["Macro", "Percentage"]
         )
 
-        st.bar_chart(macro_df.set_index("Macro"))
+        st.bar_chart(macro_daily_df.set_index("Macro"))
+
+        # Rolling Window Macro Distribution
+        st.subheader(f"{window.capitalize()} Rolling Macro Distribution (%)")
+
+        macro_roll_df = pd.DataFrame(
+            result["macro_roll"].items(),
+            columns=["Macro", "Percentage"]
+        )
+
+        st.bar_chart(macro_roll_df.set_index("Macro"))
+
 
         # Flags Section
         st.subheader("Detected Flags")

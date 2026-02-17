@@ -171,29 +171,41 @@ def analyze_menu(menu_df, window="week"):
     # Explanation
     explanations = []
 
-    if latest["range_pressure"] == 0:
-        explanations.append("All macro-nutrient shares remain within reference ranges.")
-
-    if latest["deviation_score"] > 10:
-        explanations.append("Menu composition deviates noticeably from recommended macro balance.")
-
+    # Range check
     if latest["range_pressure"] > 0:
         explanations.append("One or more macro-nutrient values exceed recommended limits.")
+    else:
+        explanations.append("Macro-nutrient shares remain within reference ranges.")
 
-    if not explanations:
-        explanations.append("No abnormal nutritional patterns detected.")
+    # Deviation context
+    if latest["deviation_score"] > 15:
+        explanations.append("Menu composition deviates strongly from recommended macro balance.")
+    elif latest["deviation_score"] > 5:
+        explanations.append("Menu composition shows moderate deviation from recommended balance.")
+    else:
+        explanations.append("Macro distribution is close to recommended balance.")
 
     explanation_text = " ".join(explanations)
 
     return {
-        "risk_score": risk_score,
-        "risk_level": risk_level,
-        "flags": latest["flags"],
-        "macro_pct": {
-            "carbs": round(latest["carbs_pct"], 1),
-            "protein": round(latest["protein_pct"], 1),
-            "fat": round(latest["fat_pct"], 1)
-        },
-        "deviation_score": round(latest["deviation_score"], 2),
-        "explanation": explanation_text
-    }
+    "risk_score": risk_score,
+    "risk_level": risk_level,
+    "flags": latest["flags"],
+
+    # Daily distribution (raw current day)
+    "macro_pct": {
+        "carbs": round(latest["carbs_pct"], 1),
+        "protein": round(latest["protein_pct"], 1),
+        "fat": round(latest["fat_pct"], 1)
+    },
+
+    # Rolling distribution (used in risk calculation)
+    "macro_roll": {
+        "carbs": round(latest["carbs_roll"], 1),
+        "protein": round(latest["protein_roll"], 1),
+        "fat": round(latest["fat_roll"], 1)
+    },
+
+    "deviation_score": round(latest["deviation_score"], 2),
+    "explanation": explanation_text
+}
