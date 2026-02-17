@@ -1,10 +1,18 @@
 import pandas as pd
 import numpy as np
 
+# Reference Macro Ranges
 REFERENCE_RANGES = {
     "carbs": (45, 65),
     "protein": (10, 35),
     "fat": (20, 35)
+}
+
+# Midpoint baseline for deviation calculation
+REFERENCE_BASELINE = {
+    "carbs_pct": 55,      # midpoint of 45–65
+    "protein_pct": 20,    # midpoint of 10–35
+    "fat_pct": 27.5       # midpoint of 20–35
 }
 
 WINDOW_OPTIONS = {
@@ -13,6 +21,7 @@ WINDOW_OPTIONS = {
     "month": 30
 }
 
+# Dish Normalization
 def normalize_dish_name(dish):
     dish = dish.lower()
     keywords = [
@@ -35,28 +44,20 @@ def find_best_match(dish, nutrition_dishes):
             return ref_dish
     return None
 
-def normalize_1_100(x, k=1.5):
-    return 100 / (1 + np.exp(-k * (x - 1)))
-
+# -------------------------------
+# Main Analysis Function
+# -------------------------------
 def analyze_menu(menu_df, window="week"):
-    """
-    Analyze mess menu nutrition risk.
-
-    menu_df columns:
-    - date
-    - dish
-    - quantity_g
-    """
 
     # ---- Load nutrition reference ----
     nutrition_df = pd.read_csv("Data/nutrition_reference_clean.csv")
     nutrition_df["dish"] = nutrition_df["dish"].str.strip().str.lower()
 
-    # ---- Clean menu input ----
+    # ---- Clean input ----
     menu_df = menu_df.copy()
     menu_df["dish"] = menu_df["dish"].str.strip().str.lower()
 
-    # ---- Normalize dish names ----
+    # ---- Normalize names ----
     nutrition_df["norm_dish"] = nutrition_df["dish"].apply(normalize_dish_name)
     menu_df["norm_dish"] = menu_df["dish"].apply(normalize_dish_name)
 
@@ -83,12 +84,11 @@ def analyze_menu(menu_df, window="week"):
             "explanation": "No dishes could be matched with nutrition reference data."
         }
 
-
-    # ---- Scale nutrition by quantity ----
+    # ---- Scale macros ----
     for col in ["calories_kcal", "carbs_g", "protein_g", "fat_g"]:
         merged_df[col] = (merged_df[col] * merged_df["quantity_g"]) / 100
 
-    # ---- Aggregate daily ----
+    # ---- Daily aggregation ----
     daily_summary = merged_df.groupby("date").agg({
         "calories_kcal": "sum",
         "carbs_g": "sum",
@@ -100,29 +100,27 @@ def analyze_menu(menu_df, window="week"):
         daily_summary["carbs_g"] +
         daily_summary["protein_g"] +
         daily_summary["fat_g"]
-    )
+    ).replace(0, 1e-6)
 
     daily_summary["carbs_pct"] = daily_summary["carbs_g"] / macro_total * 100
     daily_summary["protein_pct"] = daily_summary["protein_g"] / macro_total * 100
     daily_summary["fat_pct"] = daily_summary["fat_g"] / macro_total * 100
 
-    # ---- Rolling window ----
+    # ---- Rolling window smoothing ----
     window_size = WINDOW_OPTIONS.get(window, 7)
 
     daily_summary["carbs_roll"] = daily_summary["carbs_pct"].rolling(window_size, 1).mean()
     daily_summary["protein_roll"] = daily_summary["protein_pct"].rolling(window_size, 1).mean()
     daily_summary["fat_roll"] = daily_summary["fat_pct"].rolling(window_size, 1).mean()
 
-    # ---- Deviation ----
-    baseline = daily_summary[["carbs_pct", "protein_pct", "fat_pct"]].mean()
-
+    # Signal 1: Deviation from baseline
     daily_summary["deviation_score"] = (
-        abs(daily_summary["carbs_roll"] - baseline["carbs_pct"]) +
-        abs(daily_summary["protein_roll"] - baseline["protein_pct"]) +
-        abs(daily_summary["fat_roll"] - baseline["fat_pct"])
+        abs(daily_summary["carbs_roll"] - REFERENCE_BASELINE["carbs_pct"]) +
+        abs(daily_summary["protein_roll"] - REFERENCE_BASELINE["protein_pct"]) +
+        abs(daily_summary["fat_roll"] - REFERENCE_BASELINE["fat_pct"])
     )
 
-    # ---- Range pressure ----
+    # Signal 2: Reference Range Pressure
     def range_pressure(row):
         p = 0
         if row["carbs_roll"] > REFERENCE_RANGES["carbs"][1]:
@@ -135,17 +133,18 @@ def analyze_menu(menu_df, window="week"):
 
     daily_summary["range_pressure"] = daily_summary.apply(range_pressure, axis=1)
 
-    avg_dev = daily_summary["deviation_score"].mean() + 1e-6
-    avg_pressure = daily_summary["range_pressure"].mean() + 1e-6
-
+    # Weighted Risk Score
     daily_summary["raw_risk"] = (
-        (daily_summary["deviation_score"] / avg_dev) *
-        (1 + daily_summary["range_pressure"] / avg_pressure)
+        daily_summary["deviation_score"] * 0.6 +
+        daily_summary["range_pressure"] * 0.4
     )
 
-    daily_summary["risk_score"] = daily_summary["raw_risk"].apply(normalize_1_100)
+    max_raw = daily_summary["raw_risk"].max() + 1e-6
+    daily_summary["risk_score"] = (
+        daily_summary["raw_risk"] / max_raw
+    ) * 100
 
-    # ---- Labels ----
+    # Flags
     def tag_day(row):
         tags = []
         if row["carbs_roll"] > REFERENCE_RANGES["carbs"][1]:
@@ -158,9 +157,8 @@ def analyze_menu(menu_df, window="week"):
 
     daily_summary["flags"] = daily_summary.apply(tag_day, axis=1)
 
-
     latest = daily_summary.iloc[-1]
-    # ---- Risk Level Interpretation ----
+
     risk_score = int(latest["risk_score"])
 
     if risk_score < 30:
@@ -170,38 +168,32 @@ def analyze_menu(menu_df, window="week"):
     else:
         risk_level = "High"
 
-    # ---- Explanation Builder ----
+    # Explanation
     explanations = []
 
     if latest["range_pressure"] == 0:
         explanations.append("All macro-nutrient shares remain within reference ranges.")
 
-    if latest["carbs_roll"] > REFERENCE_RANGES["carbs"][1]:
-        explanations.append("Carbohydrate share exceeds recommended upper limit.")
+    if latest["deviation_score"] > 10:
+        explanations.append("Menu composition deviates noticeably from recommended macro balance.")
 
-    if latest["protein_roll"] < REFERENCE_RANGES["protein"][0]:
-        explanations.append("Protein share is below recommended minimum.")
-
-    if latest["fat_roll"] > REFERENCE_RANGES["fat"][1]:
-        explanations.append("Fat share exceeds recommended upper limit.")
-
-    if latest["deviation_score"] > daily_summary["deviation_score"].mean():
-        explanations.append("Menu composition deviates significantly from historical baseline.")
+    if latest["range_pressure"] > 0:
+        explanations.append("One or more macro-nutrient values exceed recommended limits.")
 
     if not explanations:
-        explanations.append("No abnormal patterns detected in macro distribution.")
+        explanations.append("No abnormal nutritional patterns detected.")
 
     explanation_text = " ".join(explanations)
 
     return {
-    "risk_score": risk_score,
-    "risk_level": risk_level,
-    "flags": latest["flags"],
-    "macro_pct": {
-        "carbs": round(latest["carbs_pct"], 1),
-        "protein": round(latest["protein_pct"], 1),
-        "fat": round(latest["fat_pct"], 1)
-    },
-    "deviation_score": round(latest["deviation_score"], 2),
-    "explanation": explanation_text
-}
+        "risk_score": risk_score,
+        "risk_level": risk_level,
+        "flags": latest["flags"],
+        "macro_pct": {
+            "carbs": round(latest["carbs_pct"], 1),
+            "protein": round(latest["protein_pct"], 1),
+            "fat": round(latest["fat_pct"], 1)
+        },
+        "deviation_score": round(latest["deviation_score"], 2),
+        "explanation": explanation_text
+    }

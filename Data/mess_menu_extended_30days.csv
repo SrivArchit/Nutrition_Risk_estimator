@@ -1,0 +1,271 @@
+date,meal,dish,quantity_g
+2026-02-01,breakfast,hot tea (garam chai),204
+2026-02-01,breakfast,plain roti,92
+2026-02-01,breakfast,bread butter,50
+2026-02-01,lunch,vegetable curry,135
+2026-02-01,lunch,rajma,192
+2026-02-01,lunch,steamed rice,247
+2026-02-01,dinner,salad,69
+2026-02-01,dinner,plain roti,117
+2026-02-01,dinner,vegetable curry,145
+2026-02-02,breakfast,boiled eggs,87
+2026-02-02,breakfast,upma,211
+2026-02-02,breakfast,poha,187
+2026-02-02,lunch,curd,84
+2026-02-02,lunch,steamed rice,248
+2026-02-02,lunch,rajma,168
+2026-02-02,dinner,fried rice,209
+2026-02-02,dinner,salad,61
+2026-02-02,dinner,dal,160
+2026-02-03,breakfast,plain roti,75
+2026-02-03,breakfast,boiled eggs,99
+2026-02-03,breakfast,poha,168
+2026-02-03,lunch,paneer curry,142
+2026-02-03,lunch,vegetable curry,107
+2026-02-03,lunch,dal,135
+2026-02-03,dinner,dal,155
+2026-02-03,dinner,plain roti,83
+2026-02-03,dinner,vegetable curry,138
+2026-02-04,breakfast,upma,198
+2026-02-04,breakfast,bread butter,70
+2026-02-04,breakfast,hot tea (garam chai),200
+2026-02-04,lunch,vegetable curry,111
+2026-02-04,lunch,rajma,186
+2026-02-04,lunch,paneer curry,139
+2026-02-04,dinner,chicken curry,198
+2026-02-04,dinner,salad,99
+2026-02-04,dinner,dal,169
+2026-02-05,breakfast,poha,197
+2026-02-05,breakfast,boiled eggs,97
+2026-02-05,breakfast,bread butter,63
+2026-02-05,lunch,vegetable curry,140
+2026-02-05,lunch,dal,147
+2026-02-05,lunch,steamed rice,242
+2026-02-05,dinner,chicken curry,172
+2026-02-05,dinner,salad,90
+2026-02-05,dinner,vegetable curry,126
+2026-02-06,breakfast,upma,199
+2026-02-06,breakfast,boiled eggs,113
+2026-02-06,breakfast,poha,179
+2026-02-06,lunch,dal,166
+2026-02-06,lunch,curd,90
+2026-02-06,lunch,vegetable curry,112
+2026-02-06,dinner,plain roti,84
+2026-02-06,dinner,dal,157
+2026-02-06,dinner,vegetable curry,134
+2026-02-07,breakfast,plain roti,82
+2026-02-07,breakfast,hot tea (garam chai),181
+2026-02-07,breakfast,upma,194
+2026-02-07,lunch,rajma,193
+2026-02-07,lunch,dal,138
+2026-02-07,lunch,curd,119
+2026-02-07,dinner,salad,71
+2026-02-07,dinner,vegetable curry,121
+2026-02-07,dinner,chicken curry,171
+2026-02-08,breakfast,upma,210
+2026-02-08,breakfast,boiled eggs,118
+2026-02-08,breakfast,bread butter,61
+2026-02-08,lunch,steamed rice,269
+2026-02-08,lunch,curd,82
+2026-02-08,lunch,paneer curry,156
+2026-02-08,dinner,vegetable curry,121
+2026-02-08,dinner,fried rice,221
+2026-02-08,dinner,dal,153
+2026-02-09,breakfast,upma,200
+2026-02-09,breakfast,boiled eggs,81
+2026-02-09,breakfast,bread butter,69
+2026-02-09,lunch,dal,157
+2026-02-09,lunch,vegetable curry,106
+2026-02-09,lunch,rajma,193
+2026-02-09,dinner,plain roti,111
+2026-02-09,dinner,dal,137
+2026-02-09,dinner,fried rice,208
+2026-02-10,breakfast,boiled eggs,115
+2026-02-10,breakfast,bread butter,56
+2026-02-10,breakfast,poha,178
+2026-02-10,lunch,rajma,182
+2026-02-10,lunch,dal,160
+2026-02-10,lunch,curd,90
+2026-02-10,dinner,dal,155
+2026-02-10,dinner,salad,82
+2026-02-10,dinner,fried rice,225
+2026-02-11,breakfast,upma,201
+2026-02-11,breakfast,bread butter,50
+2026-02-11,breakfast,poha,200
+2026-02-11,lunch,steamed rice,233
+2026-02-11,lunch,rajma,186
+2026-02-11,lunch,vegetable curry,124
+2026-02-11,dinner,dal,154
+2026-02-11,dinner,plain roti,110
+2026-02-11,dinner,salad,72
+2026-02-12,breakfast,hot tea (garam chai),210
+2026-02-12,breakfast,boiled eggs,80
+2026-02-12,breakfast,poha,176
+2026-02-12,lunch,curd,88
+2026-02-12,lunch,steamed rice,243
+2026-02-12,lunch,dal,131
+2026-02-12,dinner,chicken curry,200
+2026-02-12,dinner,dal,156
+2026-02-12,dinner,fried rice,217
+2026-02-13,breakfast,plain roti,84
+2026-02-13,breakfast,poha,199
+2026-02-13,breakfast,hot tea (garam chai),191
+2026-02-13,lunch,dal,148
+2026-02-13,lunch,vegetable curry,117
+2026-02-13,lunch,paneer curry,133
+2026-02-13,dinner,dal,139
+2026-02-13,dinner,chicken curry,196
+2026-02-13,dinner,vegetable curry,138
+2026-02-14,breakfast,bread butter,50
+2026-02-14,breakfast,plain roti,80
+2026-02-14,breakfast,hot tea (garam chai),217
+2026-02-14,lunch,curd,94
+2026-02-14,lunch,steamed rice,252
+2026-02-14,lunch,rajma,191
+2026-02-14,dinner,salad,87
+2026-02-14,dinner,fried rice,235
+2026-02-14,dinner,chicken curry,176
+2026-02-15,breakfast,boiled eggs,88
+2026-02-15,breakfast,hot tea (garam chai),220
+2026-02-15,breakfast,bread butter,61
+2026-02-15,lunch,steamed rice,266
+2026-02-15,lunch,paneer curry,144
+2026-02-15,lunch,curd,109
+2026-02-15,dinner,dal,152
+2026-02-15,dinner,chicken curry,190
+2026-02-15,dinner,fried rice,220
+2026-02-16,breakfast,poha,175
+2026-02-16,breakfast,hot tea (garam chai),216
+2026-02-16,breakfast,boiled eggs,98
+2026-02-16,lunch,curd,81
+2026-02-16,lunch,dal,135
+2026-02-16,lunch,steamed rice,269
+2026-02-16,dinner,chicken curry,188
+2026-02-16,dinner,salad,96
+2026-02-16,dinner,plain roti,114
+2026-02-17,breakfast,plain roti,97
+2026-02-17,breakfast,upma,197
+2026-02-17,breakfast,poha,164
+2026-02-17,lunch,steamed rice,241
+2026-02-17,lunch,vegetable curry,129
+2026-02-17,lunch,paneer curry,151
+2026-02-17,dinner,dal,136
+2026-02-17,dinner,salad,82
+2026-02-17,dinner,plain roti,113
+2026-02-18,breakfast,bread butter,56
+2026-02-18,breakfast,boiled eggs,80
+2026-02-18,breakfast,poha,200
+2026-02-18,lunch,paneer curry,151
+2026-02-18,lunch,dal,130
+2026-02-18,lunch,rajma,171
+2026-02-18,dinner,plain roti,117
+2026-02-18,dinner,fried rice,236
+2026-02-18,dinner,vegetable curry,110
+2026-02-19,breakfast,upma,199
+2026-02-19,breakfast,poha,183
+2026-02-19,breakfast,plain roti,75
+2026-02-19,lunch,vegetable curry,131
+2026-02-19,lunch,rajma,183
+2026-02-19,lunch,curd,100
+2026-02-19,dinner,chicken curry,183
+2026-02-19,dinner,dal,131
+2026-02-19,dinner,salad,75
+2026-02-20,breakfast,plain roti,84
+2026-02-20,breakfast,boiled eggs,105
+2026-02-20,breakfast,bread butter,53
+2026-02-20,lunch,vegetable curry,101
+2026-02-20,lunch,curd,85
+2026-02-20,lunch,paneer curry,141
+2026-02-20,dinner,plain roti,115
+2026-02-20,dinner,chicken curry,176
+2026-02-20,dinner,salad,73
+2026-02-21,breakfast,upma,191
+2026-02-21,breakfast,hot tea (garam chai),195
+2026-02-21,breakfast,bread butter,78
+2026-02-21,lunch,dal,167
+2026-02-21,lunch,steamed rice,269
+2026-02-21,lunch,paneer curry,153
+2026-02-21,dinner,chicken curry,191
+2026-02-21,dinner,fried rice,212
+2026-02-21,dinner,dal,164
+2026-02-22,breakfast,poha,186
+2026-02-22,breakfast,plain roti,73
+2026-02-22,breakfast,upma,191
+2026-02-22,lunch,vegetable curry,106
+2026-02-22,lunch,rajma,163
+2026-02-22,lunch,curd,96
+2026-02-22,dinner,plain roti,95
+2026-02-22,dinner,vegetable curry,143
+2026-02-22,dinner,dal,157
+2026-02-23,breakfast,poha,190
+2026-02-23,breakfast,hot tea (garam chai),194
+2026-02-23,breakfast,upma,208
+2026-02-23,lunch,curd,80
+2026-02-23,lunch,paneer curry,150
+2026-02-23,lunch,vegetable curry,103
+2026-02-23,dinner,dal,165
+2026-02-23,dinner,plain roti,85
+2026-02-23,dinner,vegetable curry,149
+2026-02-24,breakfast,upma,213
+2026-02-24,breakfast,plain roti,73
+2026-02-24,breakfast,bread butter,71
+2026-02-24,lunch,dal,153
+2026-02-24,lunch,paneer curry,166
+2026-02-24,lunch,rajma,177
+2026-02-24,dinner,salad,72
+2026-02-24,dinner,vegetable curry,140
+2026-02-24,dinner,chicken curry,164
+2026-02-25,breakfast,plain roti,61
+2026-02-25,breakfast,poha,182
+2026-02-25,breakfast,upma,217
+2026-02-25,lunch,curd,120
+2026-02-25,lunch,paneer curry,155
+2026-02-25,lunch,dal,139
+2026-02-25,dinner,dal,140
+2026-02-25,dinner,salad,73
+2026-02-25,dinner,fried rice,221
+2026-02-26,breakfast,boiled eggs,105
+2026-02-26,breakfast,upma,213
+2026-02-26,breakfast,plain roti,99
+2026-02-26,lunch,dal,169
+2026-02-26,lunch,paneer curry,152
+2026-02-26,lunch,curd,81
+2026-02-26,dinner,fried rice,220
+2026-02-26,dinner,salad,79
+2026-02-26,dinner,plain roti,119
+2026-02-27,breakfast,bread butter,56
+2026-02-27,breakfast,plain roti,90
+2026-02-27,breakfast,upma,183
+2026-02-27,lunch,vegetable curry,106
+2026-02-27,lunch,curd,93
+2026-02-27,lunch,dal,131
+2026-02-27,dinner,fried rice,219
+2026-02-27,dinner,vegetable curry,126
+2026-02-27,dinner,salad,99
+2026-02-28,breakfast,hot tea (garam chai),190
+2026-02-28,breakfast,boiled eggs,94
+2026-02-28,breakfast,bread butter,60
+2026-02-28,lunch,vegetable curry,111
+2026-02-28,lunch,curd,103
+2026-02-28,lunch,steamed rice,251
+2026-02-28,dinner,plain roti,109
+2026-02-28,dinner,dal,141
+2026-02-28,dinner,vegetable curry,119
+2026-03-01,breakfast,hot tea (garam chai),182
+2026-03-01,breakfast,plain roti,66
+2026-03-01,breakfast,upma,184
+2026-03-01,lunch,curd,90
+2026-03-01,lunch,rajma,175
+2026-03-01,lunch,paneer curry,144
+2026-03-01,dinner,salad,81
+2026-03-01,dinner,plain roti,81
+2026-03-01,dinner,fried rice,221
+2026-03-02,breakfast,bread butter,57
+2026-03-02,breakfast,poha,199
+2026-03-02,breakfast,hot tea (garam chai),208
+2026-03-02,lunch,vegetable curry,136
+2026-03-02,lunch,curd,99
+2026-03-02,lunch,steamed rice,235
+2026-03-02,dinner,vegetable curry,131
+2026-03-02,dinner,salad,81
+2026-03-02,dinner,plain roti,94
